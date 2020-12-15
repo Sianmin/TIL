@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <div>{{first}} 곱하기 는? {{second}}</div>
+            <form v-on:submit="onSubmitForm">
+                <input type="number" ref="answer" v-model="value">
+                <button type="submit">입력</button>
+                <div>{{value}}</div>
+            </form>
+            <div>{{result}}</div>
+
+        </div>
+    </body>
+    <script>
+        const app = new Vue({
+            el: '#root',
+            data: {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                result: '',
+                value: '',
+            },
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    if(this.first * this.second == this.value) {
+                        this.first = Math.ceil(Math.random() * 9);
+                        this.second = Math.ceil(Math.random() * 9);
+                        this.result = 'O';
+                    } else{
+                        this.result = 'X';
+                    }
+                    this.value = '';
+                    this.$refs.answer.focus(); // 어쩔 수 없는 경우를 제외하고 refs 남용 금지
+                }
+            },
+        });
+    </script>
+</html>

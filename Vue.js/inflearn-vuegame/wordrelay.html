@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <word-relay startword="제로초"></word-relay>
+        <word-relay startword="코코볼"></word-relay>
+        <word-relay startword="큐플레이"></word-relay>
+    </div>
+</body>
+<script>
+    Vue.component('word-relay', { // 전역 컴포넌트
+        template: `
+            <div>
+                <div>{{word}}</div>
+                <form v-on:submit="onSubmitForm">
+                    <input type="text" v-model="value">
+                    <button type="submit">입력!</button>
+                </form>
+                <div>{{result}}</div>
+            </div>
+        `,
+        props: ['startword'],
+        data() {
+            return {
+                word: this.startword,
+                result: '',
+                value: '',
+            };
+        },
+        methods: {
+            onSubmitForm(e) {
+                e.preventDefault();
+                if (this.word[this.word.length - 1] == this.value[0]) { 
+                    this.word = this.value;
+                    this.result = 'O';
+                    this.value = '';
+                } else{
+                    this.value='';
+                    this.result = 'X';
+                }
+            }
+        },
+    })
+</script>
+<script>
+    const app = new Vue({
+        el: '#root',
+    });
+</script>
+</html>
